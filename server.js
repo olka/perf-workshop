@@ -1,18 +1,17 @@
 const levelup = require('level');
 const db = levelup('./data', { valueEncoding: 'json' });
-
 const marked = require('marked');
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-
 const crypto = require('crypto');
 const app = express();
+const data = [];
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(morgan(':method :url :status - :response-time ms'));
 app.use(bodyParser.urlencoded({ extended: true }));
-const data = [];
+
 
 app.get('/', (req, res, next) => {
 	db.createReadStream()
@@ -36,14 +35,7 @@ app.get('/create-post', (req, res) => {
 });
 
 app.post('/create-post', (req, res) => {
-	function getUniqueId(prime){
-		var diffHell = crypto.createDiffieHellman(prime);
-		diffHell.generateKeys('hex');
-		return diffHell.getPrivateKey('hex');
-	};
-
-	const id = getUniqueId(1024);
-	//console.log(id);
+	const id = crypto.createDiffieHellman(1024).generateKeys('hex');
 	db.put(id, {
 		title: req.body.title,
 		short: req.body.short,

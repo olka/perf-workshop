@@ -1,8 +1,6 @@
 # node-express-workshop-complete
 
-This is the reference implementation for the node-express-workshop I am working on.
-
-> The workshop is still being written, but I'd love feedback on the this project!
+This is borrowed from Jed Watson implementation for the node-express-workshop with some performance quirks to fix.
 
 The outcome is a simple blog website using:
 
@@ -42,34 +40,35 @@ If you want to reset the content database, you can do that by running:
 ```sh
 node server --reset
 ```
+===========Other notes: ==================
+Intall k6: https://docs.k6.io/docs/installation
 
-## Caveats
+Monitoring:
+npm install -g pm2
+pm2 start server.js
 
-There are a few things you'd want to do in a production app that I haven't included, because the point of this project is to demonstrate the core concepts involved in setting up a database-driven blog / cms with node.js as simply as possible.
+Execute load tests:
+k6 run load.js --duration 60s --vus 10
 
-Specifically, it doesn't handle:
 
-* Performance (thousands of posts would cause problems)
-  * Posts on the homepage should be paginated
-  * Markdown is converted to HTML in real time, in a production app you'd cache the output in the database
-* Sessions or security - anyone can add a post
-* Database errors
-* SEO - it doesn't generate friendly URLs, meta tags or a sitemap
+Profiling:
+pm2 start server.js --node-args="--inspect --perf-basic-prof" //default is 127.0.0.1:9229 On linux\prod you may start inspect session by sending SIGUSR1 signal to a process like kill -SIGUSR1 PID but there is NO CUSTOM SIGNALS IN WINDOWS 
+chrome://inspect    (https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference)
 
-## Next Steps
+Execute k6 tests
+k6 run load.js --duration 120s --vus 10
 
-There are a number of "good next steps" you could take from here. They include:
+What profiling types should we use?
 
-* Customise the style of the blog
-* Add a favicon (hint: there's an express package for that!)
-* Generate friendly IDs for posts, instead of using the current time (there's a package for that too)
-* Give posts an image upload field
-* Add a [Sitemap](https://en.wikipedia.org/wiki/Sitemaps) handler
-* Switch from markdown to a rich HTML editor, e.g. [CKEditor](http://ckeditor.com/), [TinyMCE](https://www.tinymce.com/) or [Trix](https://trix-editor.org/)
-* Use a [different database](http://expressjs.com/en/guide/database-integration.html)
-* Add session management to protect creating posts
+Links
+https://nodejs.org/de/docs/guides/debugging-getting-started
+https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference
+http://www.brendangregg.com/flamegraphs.html
+https://addyosmani.com/blog/devtools-flame-charts/
+https://medium.com/yld-engineering-blog/cpu-and-i-o-performance-diagnostics-in-node-js-c85ea71738eb
 
-If you're interested in a proper CMS for building Node.js websites, check out [KeystoneJS](http://keystonejs.com/)
+
+
 
 ## License
 

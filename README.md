@@ -55,16 +55,24 @@ Profiling:
 pm2 start server.js --node-args="--inspect --perf-basic-prof" //default is 127.0.0.1:9229 On linux\prod you may start inspect session by sending SIGUSR1 signal to a process like kill -SIGUSR1 PID but there is NO CUSTOM SIGNALS IN WINDOWS 
 chrome://inspect    (https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference)
 
+Extra (flame graphs): 
+https://www.ebayinc.com/stories/blogs/tech/igniting-node-js-flames/
+https://github.com/jlfwong/chrome2calltree
+https://github.com/cimi/d3-flame-graphs
+
+
 Execute k6 tests
 k6 run load.js --duration 120s --vus 10
 
 What profiling types should we use?
 
 Links
+https://www.ebayinc.com/stories/blogs/tech/igniting-node-js-flames/
 https://nodejs.org/de/docs/guides/debugging-getting-started
 https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference
 http://www.brendangregg.com/flamegraphs.html
 https://addyosmani.com/blog/devtools-flame-charts/
+https://medium.com/netflix-techblog/node-js-in-flames-ddd073803aa4
 https://medium.com/yld-engineering-blog/cpu-and-i-o-performance-diagnostics-in-node-js-c85ea71738eb
 
 
